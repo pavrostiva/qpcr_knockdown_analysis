@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.streamlit/secrets.toml
+# Never commit experimental data
+*.zip
+*.pcrd
+*.xlsx
+*.csv
+*.pdf
+!tests/fixtures/*.csv
