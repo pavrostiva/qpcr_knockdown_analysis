@@ -217,6 +217,9 @@ def render_experiment(idx: int, exp: dict) -> dict:
         st.warning(w)
 
     results = kd.analyze(wells, refs, cals, eff, excluded, samples) if refs and cals else pd.DataFrame()
+    if refs and cals and all(t in refs for t in exp["targets"]):
+        st.info("This experiment contains only reference gene(s) (" + ", ".join(exp["targets"]) + "). Upload the run with the target "
+                "gene(s) too, or deselect a reference gene, to calculate relative expression.")
 
     if len(results) and "rel" in results:
         log_scale = st.checkbox("Logarithmic y axis", key=f"{eid}_log")

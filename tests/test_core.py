@@ -119,3 +119,11 @@ def test_reports_build(demo):
     runs = {r.label: r for r in ing.runs}
     assert kd_report.build_pdf("demo", [e], wells, runs)[:4] == b"%PDF"
     assert kd_report.build_excel([e], wells, list(runs), set())[:2] == b"PK"
+
+
+def test_only_reference_gene_gives_empty_result_not_a_crash(demo):
+    _, wells = demo
+    only_ref = wells[wells["Target"] == "ACTB_h"]
+    res = kd.analyze(only_ref, ["ACTB_h"], ["1 Ctrl"])
+    assert res.empty and "rel" in res.columns
+    assert kd.plot_frame(res, "ACTB_h", {}).empty

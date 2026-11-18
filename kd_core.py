@@ -26,6 +26,8 @@ NTC_RE = re.compile(r"^\s*(ntc|no[\s_-]*template.*|water|h2o|nfw)\s*$", re.I)
 NORT_RE = re.compile(r"^\s*(-\s*rt|no[\s_-]*rt|minus[\s_-]*rt)\s*$", re.I)
 DOSE_RE = re.compile(r"^(?P<group>.+?)[,;]\s*(?P<dose>[\d.]+\s*(?:nM|pM|µM|uM|mM|ng|µg|ug|%))\s*$", re.I)
 
+RESULT_COLUMNS = ["Target", "Sample", "n_used", "n_wells", "Cq", "Cq_sd", "is_control", "dCt", "ddCt", "rel", "rel_lo",
+                  "rel_hi", "sd_cycles", "knockdown_pct"]
 SD_LIMIT = 0.3          # technical replicates with a larger SD are flagged
 REF_RANGE_LIMIT = 1.0   # a reference gene whose mean Cq moves more than this between samples is flagged
 NTC_MARGIN = 5.0        # NTC should be this many cycles later than the latest sample, or at/after Cq 35
@@ -474,7 +476,9 @@ def analyze(wells: pd.DataFrame, refs: list, calibrators: list, efficiency: dict
                 row.update({"rel": rel, "rel_lo": rel / E(g) ** sd_cyc, "rel_hi": rel * E(g) ** sd_cyc,
                             "sd_cycles": sd_cyc, "knockdown_pct": (1.0 - rel) * 100.0})
             rows.append(row)
-    out = pd.DataFrame(rows)
+    out = pd.DataFrame(rows, columns=None if rows else RESULT_COLUMNS)
+    if out.empty:
+        return out
     out["Sample"] = pd.Categorical(out["Sample"], categories=samples, ordered=True)
     return out.sort_values(["Target", "Sample"]).reset_index(drop=True)
 
