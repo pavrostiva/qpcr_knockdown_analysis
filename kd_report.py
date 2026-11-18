@@ -19,7 +19,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import cm
 from reportlab.platypus import Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
-from kd_core import ROWS, curves_for, plot_frame
+from kd_core import ROWS, __version__, curves_for, plot_frame
 
 NAVY = colors.HexColor("#1F4E79")
 GREY = colors.HexColor("#6B7280")
@@ -226,7 +226,7 @@ def _footer(title):
         canvas.saveState()
         canvas.setFont("Helvetica", 7.5)
         canvas.setFillColor(GREY)
-        canvas.drawString(MARGIN, 0.8 * cm, f"qPCR knockdown analysis  |  {title}")
+        canvas.drawString(MARGIN, 0.8 * cm, f"qPCR knockdown analysis v{__version__}  |  {title}")
         canvas.drawRightString(PAGE[0] - MARGIN, 0.8 * cm, f"Page {doc.page}")
         canvas.restoreState()
     return draw

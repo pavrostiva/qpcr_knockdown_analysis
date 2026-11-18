@@ -1,0 +1,12 @@
+# Changelog
+
+The version is shown at the bottom of the sidebar and in the footer of every PDF page.
+
+## 1.0.2 (2026-11-18)
+- Show the app version in the sidebar and in the PDF footer.
+
+## 1.0.1 (2026-11-18)
+- Fix a crash when an experiment contains only reference genes; the app now says what is missing.
+
+## 1.0.0 (2026-11-18)
+- First release: relative expression (ΔΔCt), knockdown %, QC, PDF and Excel reports.

@@ -70,6 +70,7 @@ with st.sidebar:
                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", width="stretch")
     st.markdown("---")
     st.caption("Files are processed in memory and are not stored. For confidential data, run the app locally (see README).")
+    st.caption(f"Version **{kd.__version__}** · {kd.__date__}")
 
 # ----------------------------------------------------------------------------- loading
 
