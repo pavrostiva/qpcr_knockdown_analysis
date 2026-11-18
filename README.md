@@ -7,6 +7,12 @@ Relative expression (ΔΔCt), knockdown %, quality control and a ready PDF / Exc
 
 <br>
 
+<a href="https://qpcr-knockdown-analysis.streamlit.app/">
+  <img src="https://img.shields.io/badge/%E2%96%B6%20%20OPEN%20THE%20APP-qpcr--knockdown--analysis.streamlit.app-1F4E79?style=for-the-badge" alt="Open the app" height="56">
+</a>
+
+<br><br>
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg)](https://streamlit.io)
@@ -116,7 +122,7 @@ The app opens at `http://localhost:8501`.
 
 1. Push the repository to GitHub.
 2. Go to [share.streamlit.io](https://share.streamlit.io), choose **Create app**, pick the repository, branch `main` and the file `app.py`.
-3. Deploy. You get a public link you can share with the lab.
+3. Deploy. You get a public link you can share with the lab (this project: https://qpcr-knockdown-analysis.streamlit.app/).
 
 On the hosted version uploaded files are processed in memory on Streamlit's servers. Do not put patient-identifying data there.
 
