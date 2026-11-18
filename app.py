@@ -12,7 +12,7 @@ DOSE_COLORS = ["#1F4E79", "#4F8FCB", "#9DC3E6", "#C9A227", "#7A5195"]
 CONTROL_COLOR = "#9CA3AF"
 
 
-@st.cache_data(show_spinner="Reading files...")
+@st.cache_data(show_spinner="Reading files...", ttl=3600, max_entries=3)
 def load_files(files: tuple) -> kd.Ingest:
     return kd.ingest(list(files))
 
@@ -69,7 +69,8 @@ with st.sidebar:
         st.download_button("📄 Plate layout template", kd_report.template_xlsx(), "plate_layout_template.xlsx",
                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", width="stretch")
     st.markdown("---")
-    st.caption("Files are processed in memory and are not stored. For confidential data, run the app locally (see README).")
+    st.caption("Files are read in server memory, not saved, and not visible to other users. They are cached for up to 1 hour. "
+               "If your data must not leave your computer, run the app locally (see README).")
     st.caption(f"Version **{kd.__version__}** · {kd.__date__}")
 
 # ----------------------------------------------------------------------------- loading
@@ -248,11 +249,20 @@ def render_experiment(idx: int, exp: dict) -> dict:
 
     with st.expander("🔬 Quality control", expanded=bool(len(flags) or (len(ntc) and (ntc["Status"] == "Check").any()))):
         st.markdown("**Reference genes** (mean Cq of each sample; a stable gene moves less than 1 cycle)")
-        st.dataframe(ref_table, width="stretch", hide_index=True) if len(ref_table) else st.caption("No housekeeping-like genes detected.")
+        if len(ref_table):
+            st.dataframe(ref_table.round(2), width="stretch", hide_index=True)
+        else:
+            st.caption("No housekeeping-like genes detected.")
         st.markdown(f"**Negative controls** (pass: no Cq, Cq ≥ 35, or {kd.NTC_MARGIN:g}+ cycles after the latest sample)")
-        st.dataframe(ntc, width="stretch", hide_index=True) if len(ntc) else st.caption("No NTC wells in the layout.")
+        if len(ntc):
+            st.dataframe(ntc.round(2), width="stretch", hide_index=True)
+        else:
+            st.caption("No NTC wells in the layout.")
         st.markdown(f"**Replicates with SD > {kd.SD_LIMIT:g} cycles**")
-        st.dataframe(flags, width="stretch", hide_index=True) if len(flags) else st.success("All replicate groups are tight.")
+        if len(flags):
+            st.dataframe(flags.round(2), width="stretch", hide_index=True)
+        else:
+            st.success("All replicate groups are tight.")
         miss = missing[missing["Target"].isin(exp["targets"])]
         if len(miss):
             st.markdown("**Wells without Cq**")

@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __date__ = "2026-11-18"
 
 ROWS = list("ABCDEFGH")

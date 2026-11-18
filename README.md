@@ -105,9 +105,9 @@ With 100 % efficiency this is the classic **2^-ΔΔCt** (Livak) method. You can 
 
 ---
 
-## Run it on your own computer
+## Your data
 
-If your data is confidential, run the app locally: then nothing leaves your machine.
+The hosted app reads your files in the memory of the server it runs on (plus a temporary folder that is deleted right after reading) and keeps the parsed result for up to one hour so that changes in the interface are fast. It does not send your files anywhere else, and other visitors cannot see them: every session is separate. Still, the files travel to a third-party server (Streamlit Community Cloud), so if your data must not leave your computer or institution, run the app locally:
 
 ```bash
 git clone https://github.com/pavrostiva/qpcr_knockdown_analysis.git
@@ -117,14 +117,6 @@ streamlit run app.py
 ```
 
 The app opens at `http://localhost:8501`.
-
-### Put it online (Streamlit Community Cloud)
-
-1. Push the repository to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io), choose **Create app**, pick the repository, branch `main` and the file `app.py`.
-3. Deploy. You get a public link you can share with the lab (this project: https://qpcr-knockdown-analysis.streamlit.app/).
-
-On the hosted version uploaded files are processed in memory on Streamlit's servers. Do not put patient-identifying data there.
 
 ---
 
